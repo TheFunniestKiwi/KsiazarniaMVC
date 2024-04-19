@@ -1,0 +1,43 @@
+﻿@model int 
+
+@* <div class="container row">
+    <div class="col-12 text-center">
+        <h1 class="text text-center"> Order Placed</h1>
+        Your Order Number is : @Model <br/><br/>
+        <img src="~/images/lawn_leaf.jpg" width="65%" />
+    </div>
+    <div class="col-12 text-center" style="color:maroon">
+        <br/>
+        Your order has been placed successfully 
+        <br/>
+    </div>
+</div>
+ *@
+
+<div class="card  container pt-4">
+    <div class="card-header bg-primary text-light ml-0  row ">
+        <div class="col-12 col-md-6 align-content-center">
+            <h1 class="text-secondary ">Order Placed</h1>
+        </div>
+    </div>
+    <div class="card-body row container">
+        <div class="container rounded p-2">
+            <div class="row">
+                <div class="col-12 col-lg-12">
+                    <div class="row pl-4">
+                        <img src="~/images/lawn_leaf.jpg" width="50%" />
+                    </div>
+                    <div class="row pl-2">
+                        <p class="text-secondary text-center">Your order has been successfully placed</p>
+                        <p class="text-secondary text-center">Your Order Number is : @Model</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+             <a class="btn btn-success form-control " style="height:50px;" asp-controller="Home" asp-action="Index">Back to Home</a>
+        </div>
+    </div>
+</div>

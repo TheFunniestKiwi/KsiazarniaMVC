@@ -1,0 +1,177 @@
+﻿@using Microsoft.AspNetCore.Http
+@using KsiazarniaUtility
+@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Książarnia</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link id="stylesheet" rel="stylesheet" href="/css/Contrast-0.css"/>
+    <link rel="stylesheet" href="~/BulkyBookWeb.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <style>
+        /* Dodaj style dla trzech poziomów kontrastu */
+
+
+        body.high-contrast-0 {
+            background-color: #fff !important;
+            color: #000 !important;
+        }
+
+        .bg-primary-0 {
+            background-color: #b6294c !important;
+        }
+
+        .bg-primary-1{
+            background-color: #000!important;
+        }
+
+        .bg-primary-2 {
+            background-color: #fff!important;
+        }
+
+        .bg-primary-3 {
+            background-color: #34d1bf !important;
+        }
+
+        .bg-primary-4 {
+            background-color: #ffcc00 !important;
+        }
+
+        body.high-contrast-1 {
+            background-color: #fff !important;
+            color: #000 !important;
+        }
+
+        body.high-contrast-2 {
+            background-color: #000 !important;
+            color: #fff !important;
+        }
+
+        body.high-contrast-3 {
+            background-color: #000;
+            color: #ffcc00;
+        }
+
+        body.high-contrast-4 {
+            background-color: #ffcc00;
+            color: #000;
+        }
+
+        .navbar{
+            color: #FFF;
+        }
+    </style>
+    <style>
+        /* Dodaj style dla kontrastu navbaru */
+                .high-contrast-navbar {
+                    background-color: #000; 
+                    color: #fff; 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav id="nav" class="navbar navbar-expand-lg navbar-light bg-primary">
+            <div class="container-fluid">
+                <a class="navbar text-decoration-none" asp-area="Customer" asp-controller="Home" asp-action="Index">KSIĄŻARNIA</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapselkj" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarColor03">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+
+                        
+
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="False">Content Management</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="CoverType" asp-action="Index">Cover Type</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Company" asp-action="Index">Company</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create User</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="Admin" asp-controller="Order" asp-action="Index" asp-route-status="all">Manage Order</a>
+                            </li>
+                            
+                        }
+                        @if (User.Identity is not null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index"> 
+                                      @await Component.InvokeAsync("ShoppingCart") 
+                                </a>
+                            </li>
+                        }
+                       
+                        
+                      
+                       
+
+                    </ul>
+                    <ul class="navbar-nav ">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="False">Font</a>
+                            <div class="dropdown-menu">
+                                <button type="button" class="dropdown-item btn btn-light" style="font-size:16px;border-color:#000;" onclick="increaseFontSize(0)">A</button>
+                                <button type="button" class="dropdown-item btn btn-dark" style="font-size:20px; border-color:#000;" onclick="increaseFontSize(1)">A</button>
+                                <button type="button" class="dropdown-item btn btn-dark" style="font-size:24px;border-color:#000;" onclick="increaseFontSize(2)">A</button>
+                            </div>
+                        </li>
+                    <li class="nav-item dropdown" >
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="False">Contrast</a>
+                        <div class="dropdown-menu">
+                            <button type="button" class="dropdown-item btn btn-light" style="background-color: #b6294c; color: #FFF;" onclick="changeContrast(0)">A</button>
+                            <button type="button" class="dropdown-item btn btn-dark" style="background-color: #000; color: #FFF;" onclick="changeContrast(1)">A</button>
+                            <button type="button" class="dropdown-item btn btn-dark" style="background-color: #FFF; color: #000;" onclick="changeContrast(2)">A</button>
+                            <button type="button" class="dropdown-item btn btn-dark" style="background-color: #000; color: #ffcc00;" onclick="changeContrast(3)">A</button>
+                            <button type="button" class="dropdown-item btn btn-dark" style="background-color: #ffcc00; color: #000;" onclick="changeContrast(4)">A</button>
+                        </div>
+                    </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            <partial name="_Notification" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top card-footer overflow-hidden text-muted">
+        <div class="container">
+            &copy; 2022 - Książarnia - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/js/Contrast.js"></script>
+
+   
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,59 @@
+﻿.bg-primary {
+    background-color: #b6294c !important;
+}
+
+.high-contrast {
+    background-color: #fff !important;
+    color: #000 !important;
+}
+.navbar {
+    color: #FFF !important;
+}
+
+.nav-link {
+    color: #FFF !important;
+}
+
+.text-primary {
+    color: #000 !important;
+}
+
+.text-info {
+    color: #000 !important;
+}
+
+.text-secondary {
+    color: #000 !important;
+}
+
+.btn-primary {
+    background-color: #34d1bf !important;
+    color: #FFF !important;
+    border-color: #FFF !important;
+}
+
+
+
+.card {
+    background-color: rgba(0, 0, 0, 0.03) !important;
+    color: #000 !important;
+    border-color: #000 !important;
+}
+
+.card-header {
+    background-color: #b6294c !important;
+}
+
+.btn-success {
+    background-color: #b6294c !important;
+    color: #FFF !important;
+    border-color: #FFF !important;
+}
+
+.text-price {
+    color: firebrick !important;
+}
+
+.rounded {
+    border-radius: 20px !important;
+}
